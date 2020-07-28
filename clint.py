@@ -14,7 +14,7 @@ import requests
 # 路径应写为 static/用户名/上传的文件名or要保存的文件名
 user_info = {'code': "print('a')\nprint('b')\nprint(a)"}
 r = requests.post("http://127.0.0.1:5000?id=100", data=user_info)
-# 错误返回报错信息，正确返回输出结果
+# 错误返回报错信息，正确返回输出结果，可同时输出
 # 如果有上传的文件或者生成的图片会在files返回文件列表
 
 '''

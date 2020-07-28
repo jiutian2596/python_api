@@ -10,15 +10,14 @@ import os
 import sys
 
 app = f.Flask(__name__)
-
+if 'static' not in os.listdir(app.root_path):
+    os.system('mkdir static')
 
 @app.route('/', methods=['POST'])
 def code():
     res = {'result': '', 'error': '', 'files': []}
     temp = sys.stdout
     i = f.request.args.get('id')
-    if 'static' not in os.listdir(app.root_path):
-        os.system('mkdir static')
     if i not in os.listdir('static'):
         os.system('mkdir static\%s' % i)
     cod = f.request.form.get('code')
@@ -30,13 +29,12 @@ def code():
         with open('static/' + i + '/log.txt', 'r', encoding='utf-8') as log:
             res['result'] = log.read()
         res['error'] = str(e)
-    else:
-        sys.stdout = temp
-        os.remove('static/' + i + '/log.txt')
-        if os.listdir('static/' + i) != []:
-            for k in os.listdir('static/' + i):
-                res['files'].append(f.url_for('static', filename=i + '/' + k))
-        return f.jsonify(res)
+    sys.stdout = temp
+    os.remove('static/' + i + '/log.txt')
+    if os.listdir('static/' + i) != []:
+        for k in os.listdir('static/' + i):
+            res['files'].append(f.url_for('static', filename=i + '/' + k))
+    return f.jsonify(res)
 
 
 @app.route('/upload', methods=['POST'])
