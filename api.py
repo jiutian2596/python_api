@@ -14,7 +14,7 @@ app = f.Flask(__name__)
 
 @app.route('/', methods=['POST'])
 def code():
-    res = {'result': '', 'files': []}
+    res = {'result': '', 'error': '', 'files': []}
     temp = sys.stdout
     i = f.request.args.get('id')
     if 'static' not in os.listdir(app.root_path):
@@ -26,10 +26,10 @@ def code():
         with open('static/' + i + '/log.txt', 'w', encoding='utf-8') as log:
             sys.stdout = log
             exec(cod)
+    except Exception as e:
         with open('static/' + i + '/log.txt', 'r', encoding='utf-8') as log:
             res['result'] = log.read()
-    except Exception as e:
-        res['result'] = str(e)
+        res['error'] = str(e)
     else:
         sys.stdout = temp
         os.remove('static/' + i + '/log.txt')
