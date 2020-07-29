@@ -71,7 +71,7 @@ def upload():  # 上传文件
 
 
 @app.route('/delete')
-def dele():  # 删除文件
+def delete():  # 删除文件
     try:
         i = f.request.args.get('id')
         filena = f.request.args.get('file_name')
