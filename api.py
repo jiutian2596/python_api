@@ -8,6 +8,7 @@ Created on Tue Jul 28 10:51:43 2020
 import flask as f
 import os
 import sys
+import re
 
 app = f.Flask(__name__)
 if 'static' not in os.listdir(app.root_path):
@@ -16,12 +17,16 @@ if 'static' not in os.listdir(app.root_path):
 
 @app.route('/', methods=['POST'])
 def code():
-    res = {'result': '', 'error': '', 'files': []}
+    res = {'safe': '', 'result': '', 'error': '', 'files': []}
     temp = sys.stdout
     i = f.request.args.get('id')
     if i not in os.listdir('static'):
         os.system('mkdir static\%s' % i)
     cod = f.request.form.get('code')
+    if re.findall('cd|remove|rm -rf|ls|pwd|kill', cod, re.I) != []:
+        res['safe'] = 'false'
+        return res
+    res['safe'] = 'true'
     try:
         with open('static/' + i + '/log.txt', 'w', encoding='utf-8') as log:
             sys.stdout = log
