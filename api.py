@@ -64,7 +64,7 @@ def upload():  # 上传文件
     i = f.request.args.get('id')
     upload_file = f.request.files['touch']
     if upload_file:
-        upload_file.save(os.path.join('static', i, upload_file.filename))
+        upload_file.save(os.path.join(app.root_path,'static', i, upload_file.filename))
         return f.jsonify({'state': 'success'})
     else:
         return f.jsonify({'state': 'failed'})
@@ -81,4 +81,4 @@ def delete():  # 删除文件
         return f.jsonify({'state': 'error'})
 
 
-app.run('192.168.1.240', port=5000)  # 服务器IP地址
+app.run('0.0.0.0', port=5000)  # 服务器IP地址

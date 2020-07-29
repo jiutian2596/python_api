@@ -7,6 +7,7 @@ Created on Tue Jul 28 13:58:03 2020
 
 import requests
 
+
 # 测试链接
 # 运行代码
 # 要求 post 用户名 代码为字典格式{’code':'上传的代码'(类型str)}
@@ -21,16 +22,15 @@ r = requests.post("http://jiutian.51vip.biz?id=100", data=user_info)  # 测试ip
 '''
 #上传文件
 #要求post+用户名+上传的文件
-f=open('test.py','rb')
+f=open('123.zip','rb')
 file_info={'touch':f}
-r = requests.post("http://127.0.0.1:5000/upload?id=100", files=file_info)
+r = requests.post("http://jiutian.51vip.biz/upload?id=100", files=file_info)
 f.close()
 #响应state:success/error
 '''
-
 '''
 #删除文件  id(用户id)  file_name(要删除的文件名)
-r=requests.get("http://127.0.0.1:5000/delete?id=100&file_name=test.py")
+r=requests.get("http://jiutian.51vip.biz/delete?id=100&file_name=123.zip")
 #响应state:success/error
 '''
 
