@@ -14,9 +14,10 @@ from flask_cors import CORS
 app = f.Flask(__name__)
 
 
+# 跨域访问
 @app.after_request
 def af_request(resp):
-    resp = f.make_response(resp)  ##需要导入一些函数
+    resp = f.make_response(resp)
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
     resp.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
@@ -76,7 +77,7 @@ def dele():  # 删除文件
         filena = f.request.args.get('file_name')
         os.remove('static/' + i + '/' + filena)
         return f.jsonify({'state': 'success'})
-    except:
+    except Exception:
         return f.jsonify({'state': 'error'})
 
 
