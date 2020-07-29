@@ -13,10 +13,10 @@ import requests
 # 如果需要使用到上传到的文件或需要保存文件
 # 路径应写为 static/用户名/上传的文件名or要保存的文件名
 user_info = {'code': "print('a')\nprint('b')\nprint(a)"}
-r = requests.post("http://127.0.0.1:5000?id=100", data=user_info)
+r = requests.post("http://jiutian.51vip.biz?id=100", data=user_info)  # 测试ip地址
 # 错误返回报错信息，正确返回输出结果，可同时输出
 # 如果有上传的文件或者生成的图片会在files返回文件列表
-#如果代码存在危险词如cd ls remove等返回安全状态false否则返回true
+# 如果代码存在危险词如cd ls remove等返回安全状态false否则返回true
 
 '''
 #上传文件

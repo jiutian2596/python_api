@@ -9,8 +9,22 @@ import flask as f
 import os
 import sys
 import re
+from flask_cors import CORS
 
 app = f.Flask(__name__)
+
+
+@app.after_request
+def af_request(resp):
+    resp = f.make_response(resp)  ##需要导入一些函数
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.headers['Access-Control-Allow-Methods'] = 'GET,POST'
+    resp.headers['Access-Control-Allow-Headers'] = 'x-requested-with,content-type'
+    return resp
+
+
+CORS(app, supports_credentials=True)
+
 if 'static' not in os.listdir(app.root_path):
     os.system('mkdir static')
 
@@ -23,7 +37,8 @@ def code():
     if i not in os.listdir('static'):
         os.system('mkdir static\%s' % i)
     cod = f.request.form.get('code')
-    if re.findall('cd|remove|rm -rf|ls|pwd|kill', cod, re.I) != []:
+    if re.findall('cd|remove|rm -rf|ls|pwd|kill|mkdir|system', cod, re.I) != []:
+        res['error'] = 'No permission!!!'
         res['safe'] = 'false'
         return res
     res['safe'] = 'true'
@@ -65,4 +80,4 @@ def dele():  # 删除文件
         return f.jsonify({'state': 'error'})
 
 
-app.run('0.0.0.0', port=5000)
+app.run('192.168.1.240', port=5000)  # 服务器IP地址
